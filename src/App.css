@@ -1,0 +1,77 @@
+.app {
+  text-align: center;
+  background-color: #f5f5f5;
+  min-height: 100vh;
+  padding: 20px;
+}
+
+.app-title {
+  font-size: 2rem;
+  color: #ffffff;
+  background-color: #2a3a76;
+  padding: 20px;
+  margin: 0;
+}
+
+.kanban-board {
+  width: 90%;
+  margin: 20px auto;
+  border: 1px solid #ddd;
+  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.kanban-header {
+  display: flex;
+  background-color: #2a3a76;
+  color: #ffffff;
+  font-weight: bold;
+  text-transform: uppercase;
+}
+
+.kanban-column-header {
+  flex: 1;
+  padding: 10px;
+  text-align: center;
+  border-right: 1px solid #ffffff;
+}
+
+.kanban-column-header:last-child {
+  border-right: none;
+}
+
+.kanban-body {
+  display: flex;
+  flex-direction: column;
+}
+
+.kanban-row {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 1px;
+}
+
+.kanban-cell {
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  min-height: 60px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.kanban-cell.highlight {
+  background-color: #e0f7fa;
+}
+
+.task-card {
+  font-size: 0.9rem;
+  font-weight: bold;
+  color: #ffffff;
+  text-align: center;
+  cursor: pointer;
+}
+
+.task-card.dragging {
+  opacity: 0.5;
+}
