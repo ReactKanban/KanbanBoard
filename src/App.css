@@ -1,3 +1,4 @@
+/* General styling for the app */
 .app {
   text-align: center;
   background-color: #f5f5f5;
@@ -13,21 +14,26 @@
   margin: 0;
 }
 
+/* Kanban board container */
 .kanban-board {
-  width: 90%;
+  width: 100%;
+  max-width: 1200px;
   margin: 20px auto;
   border: 1px solid #ddd;
   box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
   border-radius: 8px;
   overflow: hidden;
+  padding: 10px;
 }
 
+/* Header for the Kanban board */
 .kanban-header {
   display: flex;
   background-color: #2a3a76;
   color: #ffffff;
   font-weight: bold;
   text-transform: uppercase;
+  margin-bottom: 10px;
 }
 
 .kanban-column-header {
@@ -41,37 +47,195 @@
   border-right: none;
 }
 
+/* Body of the Kanban board */
 .kanban-body {
   display: flex;
-  flex-direction: column;
+  flex-wrap: wrap;
+  justify-content: space-between;
 }
 
 .kanban-row {
-  display: grid;
-  grid-template-columns: repeat(5, 1fr);
-  gap: 1px;
+  display: flex;
+  width: 100%;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  transition: transform 0.3s ease;
+  animation: fadeIn 0.5s ease;
 }
 
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Cells in the board */
 .kanban-cell {
   border: 1px solid rgba(0, 0, 0, 0.1);
   min-height: 60px;
+  flex: 1 1 18%;
   display: flex;
   align-items: center;
   justify-content: center;
+  margin: 5px;
+  box-sizing: border-box;
+  position: relative;
+  transition: background-color 0.3s ease, transform 0.3s ease;
 }
 
 .kanban-cell.highlight {
   background-color: #e0f7fa;
+  animation: bounce 0.3s ease;
 }
 
+@keyframes bounce {
+  0% {
+    transform: scale(1);
+  }
+
+  50% {
+    transform: scale(1.05);
+  }
+
+  100% {
+    transform: scale(1);
+  }
+}
+
+/* Task cards styling */
 .task-card {
   font-size: 0.9rem;
   font-weight: bold;
   color: #ffffff;
   text-align: center;
   cursor: pointer;
+  padding: 10px;
+  border-radius: 5px;
+  transition: transform 0.2s ease, opacity 0.2s ease;
 }
 
 .task-card.dragging {
   opacity: 0.5;
+  transform: scale(1.05);
+}
+
+.task-card.deleting {
+  animation: shrinkOut 0.4s ease forwards;
+}
+
+@keyframes shrinkOut {
+  0% {
+    opacity: 1;
+    transform: scale(1);
+  }
+
+  100% {
+    opacity: 0;
+    transform: scale(0.8);
+  }
+}
+
+/* Add task section */
+.add-task {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 20px;
+  margin-top: 1rem;
+}
+
+.add-task input {
+  padding: 10px;
+  margin: 5px;
+  width: 250px;
+  max-width: 90%;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+}
+
+.add-task button {
+  padding: 10px;
+  width: 250px;
+  max-width: 90%;
+  background-color: #2a3a76;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  margin-top: 10px;
+  transition: background-color 0.3s ease;
+}
+
+.add-task button:hover {
+  background-color: #1a2a56;
+}
+
+/* Delete button styling inside the cell */
+.delete-button {
+  margin-left: 6rem;
+  position: absolute;
+  bottom: 10px;
+  left: 50%;
+  transform: translateX(-50%);
+  background-color: #e74c3c;
+  color: white;
+  padding: 5px 10px;
+  border: none;
+  border-radius: 3px;
+  cursor: pointer;
+  font-size: 14px;
+  transition: transform 0.3s ease, background-color 0.3s ease;
+}
+
+.delete-button:hover {
+  background-color: #c0392b;
+  transform: scale(1.1);
+}
+
+/* Responsive styling for mobile devices */
+@media (max-width: 768px) {
+  .kanban-header {
+    flex-direction: column;
+  }
+
+  .kanban-column-header {
+    padding: 8px;
+    font-size: 0.8rem;
+  }
+
+  .kanban-cell {
+    flex: 1 1 48%;
+  }
+
+  .kanban-body {
+    flex-direction: column;
+  }
+
+  .add-task input,
+  .add-task button {
+    width: 90%;
+    max-width: none;
+  }
+}
+
+@media (max-width: 480px) {
+  .kanban-cell {
+    flex: 1 1 100%;
+  }
+
+  .kanban-column-header {
+    font-size: 0.7rem;
+    padding: 5px;
+  }
+
+  .add-task input,
+  .add-task button {
+    width: 100%;
+  }
 }

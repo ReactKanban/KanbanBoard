@@ -3,10 +3,10 @@ import { useDrop } from "react-dnd";
 import { useDrag } from "react-dnd";
 import "../App.css";
 
-const Cell = ({ card, rowIndex, colIndex, moveCard, isLastEmpty }) => {
+const Cell = ({ card, rowIndex, colIndex, moveCard, isDraggable, isDroppable, deleteTask }) => {
   const [{ isOver }, drop] = useDrop({
     accept: "CARD",
-    canDrop: () => isLastEmpty && !card, // Can drop only if the previous cell is filled and this cell is empty
+    canDrop: () => isDroppable,
     drop: (item) => {
       moveCard(rowIndex, item.colIndex, colIndex);
     },
@@ -18,7 +18,7 @@ const Cell = ({ card, rowIndex, colIndex, moveCard, isLastEmpty }) => {
   const [{ isDragging }, drag] = useDrag({
     type: "CARD",
     item: { rowIndex, colIndex },
-    canDrag: () => !!card, // Can drag only if a card exists
+    canDrag: () => isDraggable,
     collect: (monitor) => ({
       isDragging: !!monitor.isDragging(),
     }),
@@ -32,8 +32,19 @@ const Cell = ({ card, rowIndex, colIndex, moveCard, isLastEmpty }) => {
     >
       {card && (
         <div ref={drag} className={`task-card ${isDragging ? "dragging" : ""}`}>
-          {card.title}
+          <div>{`#${card.id}`}</div> {/* Ticket number */}
+          <div>{card.title}</div> {/* Story title */}
         </div>
+      )}
+
+      {/* Show the delete button if the card is in the "DONE" column */}
+      {colIndex === 3 && card && (
+        <button
+          className="delete-button small"
+          onClick={() => deleteTask(rowIndex, colIndex)} // Delete the task
+        >
+          X
+        </button>
       )}
     </div>
   );
